@@ -1,8 +1,12 @@
 package com.example.foodexpiryreminderapp.Model;
 // FoodItem.java
 public class FoodItem {
-    private String name;
-    private String expiryDate;
+    public String name;
+    public String expiryDate;
+    public int notificationID;
+
+    public FoodItem() {
+    }
 
     public FoodItem(String name, String expiryDate) {
         this.name = name;

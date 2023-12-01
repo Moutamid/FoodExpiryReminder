@@ -24,6 +24,7 @@ public class NotificationScheduler {
                 Constants.getRandomNumber(), intent,
                 PendingIntent.FLAG_IMMUTABLE);//FLAG_UPDATE_CURRENT
 
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-    }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+          }
 }

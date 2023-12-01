@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="recyclerViewItemSelectionColor">#50FF4081</color>
+    <color name="mediumEmphasisTextColor">#99000000</color>
+    <color name="highEmphasisTextColor">#de000000</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

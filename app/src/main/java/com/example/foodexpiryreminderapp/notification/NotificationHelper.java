@@ -32,6 +32,9 @@ public class NotificationHelper extends ContextWrapper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannels();
         }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationID = new Random().nextInt(3000);
+
 
     }
 
@@ -52,7 +55,10 @@ public class NotificationHelper extends ContextWrapper {
 
     public void sendHighPriorityNotification(String title, String body, Class activityName) {
         Intent intent = new Intent(this, activityName);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 267, intent, PendingIntent.FLAG_IMMUTABLE);//FLAG_UPDATE_CURRENT
+
 
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

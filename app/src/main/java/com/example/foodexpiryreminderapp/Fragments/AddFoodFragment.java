@@ -2,9 +2,6 @@ package com.example.foodexpiryreminderapp.Fragments;
 // AddFoodFragment.java
 // AddFoodFragment.java
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,13 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
-import com.example.foodexpiryreminderapp.Helper.Config;
 import com.example.foodexpiryreminderapp.Helper.Constants;
-import com.example.foodexpiryreminderapp.Helper.ExpiryNotificationReceiver;
-import com.example.foodexpiryreminderapp.Helper.NotificationWorker;
 import com.example.foodexpiryreminderapp.MainActivity;
 import com.example.foodexpiryreminderapp.Model.FoodItem;
 import com.example.foodexpiryreminderapp.R;
@@ -59,12 +51,12 @@ public class AddFoodFragment extends Fragment {
                 FoodItem foodItem = new FoodItem(foodName, expiryDate);
 
                 // Retrieve existing list or create a new one
-                ArrayList<FoodItem> foodItemArrayList = Stash.getArrayList(Config.FOOD_LIST_KEY, FoodItem.class);
+                ArrayList<FoodItem> foodItemArrayList = Stash.getArrayList(Constants.FOOD_LIST_KEY, FoodItem.class);
                 if (foodItemArrayList == null) {
                     foodItemArrayList = new ArrayList<>();
                 }
                 foodItemArrayList.add(foodItem);
-                Stash.put(Config.FOOD_LIST_KEY, foodItemArrayList);
+                Stash.put(Constants.FOOD_LIST_KEY, foodItemArrayList);
                 editTextFoodName.setText("");
                 setNotificationForOneMonthBeforeExpiry(foodName, expiryDate);
                 startActivity(new Intent(getContext(), MainActivity.class));
@@ -83,10 +75,7 @@ public class AddFoodFragment extends Fragment {
     }
 
     private void setNotificationForOneMonthBeforeExpiry(String name, String expiryDate) {
-//        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationWorker.class)
-//                .build();
-//
-//        WorkManager.getInstance(getContext()).enqueue(notificationWork);
+
         FoodItem reminderModel = new FoodItem();
         reminderModel.notificationID = Constants.getNewID();
         reminderModel.name = name;
@@ -108,7 +97,8 @@ public class AddFoodFragment extends Fragment {
             }
 
             // Schedule the notification
-            String reminderMsg = "Please donate food to \"Houston food bank\"";
+            String reminderMsg = "Please donate "+name+" food to \"Houston food bank\"";
+
             NotificationScheduler.scheduleNotification(
                     getContext(), expiryCalendar,
                     reminderMsg, Constants.MEDICINE_REMINDER);

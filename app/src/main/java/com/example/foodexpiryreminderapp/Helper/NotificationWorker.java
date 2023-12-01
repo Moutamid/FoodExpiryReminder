@@ -1,22 +1,22 @@
 package com.example.foodexpiryreminderapp.Helper;
-
-import androidx.work.ListenableWorker;
-// NotificationWorker.java
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
-
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.work.ForegroundInfo;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.foodexpiryreminderapp.R;
-import com.example.foodexpiryreminderapp.notification.NotificationHelper;
 
 public class NotificationWorker extends Worker {
+
+    private static final String TAG = "NotificationWorker";
+    private static final String CHANNEL_ID = "MyWorkerChannel";
 
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -25,34 +25,46 @@ public class NotificationWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        // Code to show the notification
-        showNotification();
-        return Result.success();
+        try {
+            Log.d(TAG, "doWork: Background work started");
+
+            // Show a foreground notification
+            Notification notification = createNotification();
+            ForegroundInfo foregroundInfo = new ForegroundInfo(1, notification);
+            setForegroundAsync(foregroundInfo);
+
+            // Your background work logic here
+
+            Log.d(TAG, "doWork: Background work completed successfully");
+            return Result.success();
+        } catch (Exception e) {
+            Log.e(TAG, "doWork: Background work failed", e);
+            return Result.failure();
+        }
     }
 
-    private void showNotification() {
+    private Notification createNotification() {
         createNotificationChannel();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
+        return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setContentTitle("My Worker")
+                .setContentText("Doing important work in the background")
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Food Expiry Reminder")
-                .setContentText("Don't forget to donate to Houston Food Bank!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-        notificationManager.notify(1, builder.build());
+                .build();
     }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "My Channel";
-            String description = "Channel Description";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(NotificationHelper.CHANNEL_ID, name, importance);
-            channel.setDescription(description);
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "My Worker Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
 
-            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            NotificationManager manager = getApplicationContext().getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
         }
     }
 }

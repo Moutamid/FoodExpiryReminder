@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item android:id="@+id/ra_action_copy"
+        android:title="@string/copy"
+        android:contentDescription="@string/copy"
+        />
+
+    <item android:id="@+id/ra_action_edit"
+        android:title="@string/edit"
+        android:contentDescription="@string/edit"
+        />
+
+    <item android:id="@+id/ra_action_delete"
+        android:title="@string/delete"
+        android:contentDescription="@string/delete"
+        />
+
+</menu>

@@ -27,13 +27,13 @@ public class NotificationReceiver extends BroadcastReceiver {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            calendar.add(Calendar.HOUR_OF_DAY, 12);
+            calendar.add(Calendar.HOUR_OF_DAY, 9);
 
             NotificationScheduler.scheduleNotification(context, calendar,
                     message, Constants.MEDICINE_REMINDER);
 
         } else {
-            // INVENTORY REMINDER
+
             notificationHelper.sendHighPriorityNotification("Reminder", message, MainActivity.class);
         }
     }

@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodexpiryreminderapp.Adapter.AllFoodAdapter;
-import com.example.foodexpiryreminderapp.Helper.Config;
+import com.example.foodexpiryreminderapp.Helper.Constants;
 import com.example.foodexpiryreminderapp.Model.FoodItem;
 import com.example.foodexpiryreminderapp.R;
 import com.fxn.stash.Stash;
@@ -44,7 +42,7 @@ public class FoodListFragment extends Fragment {
 
     private void loadAndUpdateData() {
         // Retrieve the list from Stash
-        foodItemArrayList = Stash.getArrayList(Config.FOOD_LIST_KEY, FoodItem.class);
+        foodItemArrayList = Stash.getArrayList(Constants.FOOD_LIST_KEY, FoodItem.class);
         if (foodItemArrayList == null) {
             foodItemArrayList = new ArrayList<>();
         }

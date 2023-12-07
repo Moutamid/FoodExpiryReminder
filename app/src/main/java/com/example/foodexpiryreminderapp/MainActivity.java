@@ -15,6 +15,7 @@ import com.example.foodexpiryreminderapp.Adapter.ViewPagerAdapter;
 import com.example.foodexpiryreminderapp.Fragments.AddFoodFragment;
 import com.example.foodexpiryreminderapp.Fragments.FoodListFragment;
 import com.example.foodexpiryreminderapp.Helper.Constants;
+import com.fxn.stash.Stash;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //        Constants.checkApp(MainActivity.this);
         ViewPager viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-
+//        Stash.clearAll();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AddFoodFragment(), "Add Food");
         adapter.addFragment(new FoodListFragment(), "Food List");

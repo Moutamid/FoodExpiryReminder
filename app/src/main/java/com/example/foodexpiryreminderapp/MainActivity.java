@@ -15,8 +15,11 @@ import com.example.foodexpiryreminderapp.Adapter.ViewPagerAdapter;
 import com.example.foodexpiryreminderapp.Fragments.AddFoodFragment;
 import com.example.foodexpiryreminderapp.Fragments.FoodListFragment;
 import com.example.foodexpiryreminderapp.Helper.Constants;
+import com.example.foodexpiryreminderapp.Model.FoodItem;
 import com.fxn.stash.Stash;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     final int PERMISSION_REQUEST_CODE = 112;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new FoodListFragment(), "Food List");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        initializeDefaultFoodItems();
 
         if (Build.VERSION.SDK_INT > 32) {
             if (!shouldShowRequestPermissionRationale("112")) {
@@ -79,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // allow
-
                 } else {
                     Toast.makeText(this, "Permisssion denied", Toast.LENGTH_SHORT).show();
                 }
@@ -88,5 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+    private void initializeDefaultFoodItems() {
+        ArrayList<FoodItem> foodItemArrayList = Stash.getArrayList(Constants.FOOD_LIST_KEY, FoodItem.class);
+
+        if (foodItemArrayList == null || foodItemArrayList.isEmpty()) {
+            foodItemArrayList = new ArrayList<>();
+
+            foodItemArrayList.add(new FoodItem("Apples", "10/10/2024", Constants.getNewID(), false));
+            foodItemArrayList.add(new FoodItem("Bread", "15/11/2024", Constants.getNewID(), false));
+            foodItemArrayList.add(new FoodItem("Milk", "22/09/2024", Constants.getNewID(), false));
+
+            Stash.put(Constants.FOOD_LIST_KEY, foodItemArrayList);
+        }
     }
 }

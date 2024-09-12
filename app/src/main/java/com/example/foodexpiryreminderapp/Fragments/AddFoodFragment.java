@@ -48,7 +48,6 @@ public class AddFoodFragment extends Fragment {
                 // Get the input values
                 String foodName = editTextFoodName.getText().toString();
                 String expiryDate = getFormattedDate(datePickerExpiry);
-
                 FoodItem foodItem = new FoodItem(foodName, expiryDate,  Constants.getNewID(), false);
                 // Retrieve existing list or create a new one
                 ArrayList<FoodItem> foodItemArrayList = Stash.getArrayList(Constants.FOOD_LIST_KEY, FoodItem.class);
